@@ -11,3 +11,7 @@
 // Password setup
 const char *ssid = "Mensah's Nokia";
 const char *password = "lucille1";
+
+// important must be global
+float oil_level{};
+float temperatureC{};

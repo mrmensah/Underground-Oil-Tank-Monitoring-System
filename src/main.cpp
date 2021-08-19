@@ -19,9 +19,11 @@ void setup()
   delay(1500);
   // readTemp();
 
-  // Setting up a file to store the data collected
-  // File temperature SPIFFS.open("/temperature.txt", "w");
-  // File level SPIFFS.open("/level.txt", "w");
+  // connect to wifi
+  checkInternet();
+
+  //Setting ESP as access point
+  // createAP();
 }
 
 void loop()
@@ -30,8 +32,10 @@ void loop()
   // delay(2000);
   // digitalWrite(GRN_LED, LOW);
   // delay(2000);
-  readTemp();
+  // readTemp();
   // checkInternet();
   // readLevel();
-}
 
+  sendData(); //posting to the database
+  delay(50000);
+}

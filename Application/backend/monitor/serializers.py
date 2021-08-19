@@ -11,7 +11,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 class DataSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Data
-        fields =['temperature', 'level']
+        fields ='__all__'
 
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):

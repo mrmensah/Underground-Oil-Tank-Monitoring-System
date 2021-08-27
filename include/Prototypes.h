@@ -1,8 +1,5 @@
 /* Funtion prototypes */
-void readTemp();
-void readLevel();
-void sendValues(float);
+float readTemp();
+float readLevel();
 void checkInternet();
-void displayValues();
-void createAP();
-void sendData();
+void sendData(float, float);

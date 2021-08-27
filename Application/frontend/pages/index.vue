@@ -10,12 +10,23 @@
     <body style="margin-top: 2em; margin-left: 5em; margin-right: 5em">
       <div>
         <div class="row">
-          <div v-for="name in names" :key="name" class="col-4">
+          <div class="col-4">
+            <b-card style="margin-top = 5em; max-width: 20em">
+              <p>{{ this.names[0] }} : {{tmp[0].level}}</p>
+              <b-card-text>Hello World</b-card-text>
+            </b-card>
+          </div>
+          <div class="col-4">
             <b-card style="margin-top = 5em; max-width: 20em">
               <p>
-                Hello, I'm a card, user me for all your meow meow needs
-                {{ name }}
+                {{ this.names[1] }} : {{tmp[0].temperature}}
               </p>
+              <b-card-text>Hello World</b-card-text>
+            </b-card>
+          </div>
+          <div class="col-4">
+            <b-card style="margin-top = 5em; max-width: 20em">
+              <p>{{ this.names[2] }} : {{ this.alert[0] }}</p>
               <b-card-text>Hello World</b-card-text>
             </b-card>
           </div>
@@ -23,7 +34,21 @@
         <div style="margin-top: 2em">
           <p>Oil Log</p>
           <div>
-            <b-table striped hover :items="items"></b-table>
+            <b-table
+              id="my-table"
+              :current-page="currentPage"
+              :per-page="perPage"
+              striped
+              hover
+              :items="final_data"
+            ></b-table>
+            <b-pagination
+              v-model="currentPage"
+              :total-rows="rows"
+              :per-page="perPage"
+              aria-controls="my-table"
+            ></b-pagination>
+            <p class="mt-3">Current Page: {{ currentPage }}</p>
           </div>
         </div>
       </div>
@@ -33,20 +58,65 @@
 
 <script>
 export default {
+  // async asyncData({ $axios, params }) {
+  //   try {
+  //     let sensors_data = await $axios.$get(`/data/`);
+  //     console.log(sensors_data);
+  //     return { sensors_data };reversedSensorsData
+  //   } catch (e) {
+  //     return { sensors_data: [] };
+  //   }
+  // },
   props: {},
   data() {
     return {
       names: ["oil level", "oil temperature", "Decision"],
-      level: [56.343, 53.34, 48.09, 30.0, 19.46, 9.93],
+      levels: [56.343, 53.34, 48.09, 30.0, 19.46, 9.93],
       temp: [32.2, 32.6, 32.1, 30.89, 45.23, 80.34],
       alert: ["Oil level decreasing too fast", "Oil temperature too high"],
-      items: [
-        { age: 40, first_name: "Dickerson", last_name: "Macdonald" },
-        { age: 21, first_name: "Larsen", last_name: "Shaw" },
-        { age: 89, first_name: "Geneva", last_name: "Wilson" },
-        { age: 38, first_name: "Jami", last_name: "Carney" },
-      ],
+      sensors_data: [],
+      perPage: 10,
+      currentPage: 1,
+      final_data: [],
+      tmp:[],
     };
   },
+  computed: {
+    // reversedSensorsData: function () {
+    //   this.sensors_data = this.sensors_data.reverse();
+    //   return this.sensors_data;
+    // },
+    rows() {
+      return this.tmp.length;
+    },
+  },
+  activated() {
+    // Call fetch again if last fetch more than 30 sec ago
+    if (this.$fetchState.timestamp <= Date.now() - 30000) {
+      this.$fetch();
+    }
+  },
+  async fetch() {
+    this.tmp = await fetch("http://0.0.0.0:8000/data/").then((res) =>
+      res.json()
+    );
+    this.sensors_data = this.tmp;
+    console.log("This is the data : ", this.tmp);
+  },
+  methods: {
+    reverseData: function () {
+      this.final_data = this.sensors_data.reverse();
+      console.log(this.final_data);
+    },
+  },
+  // beforeCreate() {
+  //   setTimeout(this.reverseData, 2000);
+  // },
+  mounted() {
+    setTimeout(this.reverseData, 2000);
+  },
+  //  updated() {
+  //   setTimeout(this.reverseData, 0);
+  // },
 };
 </script>

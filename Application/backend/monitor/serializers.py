@@ -8,7 +8,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         model = User
         fields = ['url', 'username', 'email']
 
-class DataSerializer(serializers.HyperlinkedModelSerializer):
+class DataSerializer(serializers.ModelSerializer):
     class Meta:
         model = Data
         fields ='__all__'

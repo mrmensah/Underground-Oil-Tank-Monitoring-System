@@ -12,15 +12,13 @@
         <div class="row">
           <div class="col-4">
             <b-card style="margin-top = 5em; max-width: 20em">
-              <p>{{ this.names[0] }} : {{tmp[0].level}}</p>
+              <p>{{ this.names[0] }} : {{ this.levels[0]}}</p>
               <b-card-text>Hello World</b-card-text>
             </b-card>
           </div>
           <div class="col-4">
             <b-card style="margin-top = 5em; max-width: 20em">
-              <p>
-                {{ this.names[1] }} : {{tmp[0].temperature}}
-              </p>
+              <p>{{ this.names[1] }} : {{ this.temp[0] }}</p>
               <b-card-text>Hello World</b-card-text>
             </b-card>
           </div>
@@ -40,7 +38,7 @@
               :per-page="perPage"
               striped
               hover
-              :items="final_data"
+              :items="tmp"
             ></b-table>
             <b-pagination
               v-model="currentPage"
@@ -58,16 +56,6 @@
 
 <script>
 export default {
-  // async asyncData({ $axios, params }) {
-  //   try {
-  //     let sensors_data = await $axios.$get(`/data/`);
-  //     console.log(sensors_data);
-  //     return { sensors_data };reversedSensorsData
-  //   } catch (e) {
-  //     return { sensors_data: [] };
-  //   }
-  // },
-  props: {},
   data() {
     return {
       names: ["oil level", "oil temperature", "Decision"],
@@ -78,7 +66,7 @@ export default {
       perPage: 10,
       currentPage: 1,
       final_data: [],
-      tmp:[],
+      tmp: [],
     };
   },
   computed: {
@@ -106,7 +94,7 @@ export default {
   methods: {
     reverseData: function () {
       this.final_data = this.sensors_data.reverse();
-      console.log(this.final_data);
+      console.log("This data is reversed: ",this.final_data);
     },
   },
   // beforeCreate() {
@@ -114,6 +102,8 @@ export default {
   // },
   mounted() {
     setTimeout(this.reverseData, 2000);
+    //print out the level and temperature of the last data addition
+    
   },
   //  updated() {
   //   setTimeout(this.reverseData, 0);

@@ -28,5 +28,5 @@ void setup()
 void loop()
 {
   sendData(readTemp(), readLevel()); //posting to the database
-  delay(5000);
+  delay(time);
 }

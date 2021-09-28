@@ -11,3 +11,6 @@
 // Password setup
 const char *ssid = "Mensah's Nokia";
 const char *password = "lucille1";
+
+// Set time by adjusting this. Time is in milliseconds
+int time = 10000;

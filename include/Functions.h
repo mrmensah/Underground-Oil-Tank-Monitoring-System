@@ -99,7 +99,7 @@ void checkInternet()
   lcd.print("IP: ");
   lcd.print(WiFi.localIP());
   WiFi.mode(WIFI_STA);
-  delay(2500);
+  delay(2500); 
 }
 
 
